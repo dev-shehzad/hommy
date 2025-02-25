@@ -20,7 +20,6 @@
     "@sanity/vision": "^3.62.0",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node": "^22.7.8",
-    "@types/react-dom": "^18.3.1",
     "@vercel/speed-insights": "^1.0.13",
     "autoprefixer": "^10.4.20",
     "date-fns": "^4.1.0",
@@ -41,7 +40,8 @@
   },
   "devDependencies": {
     "@sanity-codegen/types": "^1.0.0-alpha.13",
-    "@types/react": "^19.0.10",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "eslint": "^9.13.0",
     "eslint-config-next": "^15.0.0"
   }
