@@ -11,7 +11,7 @@ const getIcon = (iconName: string) => {
     case "sun":
       return <FaSun />
     case "star":
-      return <FaStar />
+      return <FaStar  />
     case "layout":
       return <FaThLarge />
     default:
