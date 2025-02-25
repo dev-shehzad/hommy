@@ -33,13 +33,14 @@ export default function AlertBanner() {
             {"Previewing drafts. "}
             <button
               type="button"
-              onClick={() =>
-                startTransition(() =>
+              onClick={() => {
+                startTransition(() => {
                   disableDraftMode().then(() => {
                     router.refresh();
-                  }),
-                )
-              }
+                  });
+                });
+              }}
+              
               className="hover:text-cyan underline transition-colors duration-200"
             >
               Back to published

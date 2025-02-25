@@ -1,8 +1,9 @@
 "use client"
 import { apartments } from "../data/apartment-data"
 import { FaBed, FaHome, FaSun, FaStar, FaThLarge, FaEye, FaBook } from "react-icons/fa"
+import { IconType } from "react-icons"
 
-const getIcon = (iconName: string) => {
+const getIcon = (iconName: string): JSX.Element => {
   switch (iconName) {
     case "bed":
       return <FaBed />
@@ -11,7 +12,7 @@ const getIcon = (iconName: string) => {
     case "sun":
       return <FaSun />
     case "star":
-      return <FaStar  />
+      return <FaStar />
     case "layout":
       return <FaThLarge />
     default:
@@ -80,4 +81,3 @@ export default function ApartmentList() {
     </div>
   )
 }
-
