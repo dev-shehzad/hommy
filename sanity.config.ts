@@ -32,6 +32,8 @@ import houses from "./sanity/schemas/documents/houses.";
 import housefeatures from "./sanity/schemas/documents/housefeatures";
 import housepics from "./sanity/schemas/documents/housepics";
 import similarappart from "./sanity/schemas/documents/similarappart";
+import propert from "./sanity/schemas/documents/propert";
+import propertii from "./sanity/schemas/documents/tabschema";
 
 const homeLocation = {
   title: "Home",
@@ -226,6 +228,9 @@ export default defineConfig({
       housefeatures,
       housepics,
       similarappart,
+    propert,
+    propertii,
+    
     ],
   },
 

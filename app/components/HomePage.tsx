@@ -40,7 +40,7 @@ export default async function HomePage() {
     }
 
     return (
-      <main className="container mx-auto px-4 py-12">
+      <main className="container  mx-auto px-4 py-12">
         <div className="grid md:grid-cols-2 gap-8 items-start">
           {/* Left Section */}
           <div className="space-y-6">

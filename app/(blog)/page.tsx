@@ -7,6 +7,7 @@ import HeroWrapper from "../components/HeroWrapper";
 import HouseListingWrapper from "../components/HouseListingWrapper";
 import HousePageWrapper from "../components/HousePageWrapper";
 import ExperiencePageWrapper from "../components/ExperiencePageWrapper";
+import Tabs from "../components/Tabs";
 
 export default  function Home() {
   // const houseListingRef = useRef<HTMLElement>(null);
@@ -14,7 +15,8 @@ export default  function Home() {
   return (
     <main>
       <HeroWrapper />
-      <HouseListingWrapper />
+      <Tabs/>
+      {/* <HouseListingWrapper /> */}
       <HousePageWrapper />
       <TabSystemWrapper />
       <ExperiencePageWrapper />

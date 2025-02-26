@@ -32,9 +32,10 @@ export default function TabSystem({ tabs = [] }: TabSystemProps) {
    return <div>Loading...</div>;
  }
   return (
-    <div className="flex flex-col lg:flex-row h-[500px] bg-white">
+<div className="w-full  bg-[#eceeef] px-4">
+    <div className="flex container bg-white  mx-auto mb-10  flex-col lg:flex-row h-[500px] ">
       {/* Main Content Area */}
-      <div className="lg:w-3/4 p-4">
+      <div className="lg:w-3/4  p-4">
         <div className="h-full bg-gray-400 rounded-lg p-6 flex flex-col justify-between relative overflow-hidden">
           {activeContent.imageUrl && (
             <Image
@@ -54,11 +55,11 @@ export default function TabSystem({ tabs = [] }: TabSystemProps) {
 
           {/* Buttons */}
           <div className="flex gap-4 w-full relative z-10">
-            <button className="flex-1 px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
+            <button className="flex-1 px-6 py-3 bg-[#eceeef] rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
               <FaEye />
               <span>view</span>
             </button>
-            <button className="flex-1 px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
+            <button className="flex-1 px-6 py-3 bg-[#eceeef] rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
               <FaUsers />
               <span>family</span>
             </button>
@@ -85,6 +86,6 @@ export default function TabSystem({ tabs = [] }: TabSystemProps) {
           ))}
         </div>
       </div>
-    </div>
+    </div></div>
   );
 }
