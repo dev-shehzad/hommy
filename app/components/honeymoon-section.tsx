@@ -1,47 +1,67 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { FaArrowDown, FaEye, FaUsers } from "react-icons/fa"
 import AutoCarousel from "./auto-carousel"
+import { client } from "@/sanity/lib/client"
+import Image from "next/image"
 
 export default function HoneymoonSection() {
-  const nextSectionRef = useRef<HTMLDivElement>(null)
+  const nextSectionRef = useRef(null)
+  const [data, setData] = useState(null)
+
+  useEffect(() => {
+    async function fetchData() {
+      const result = await client.fetch(
+        `*[_type == "honeymoon"][0]{title, subtitle, backgroundImage{asset->{url}}, buttons}`
+      )
+      setData(result)
+    }
+    fetchData()
+  }, [])
 
   const scrollToNext = () => {
     nextSectionRef.current?.scrollIntoView({ behavior: "smooth" })
   }
 
+  if (!data) return null
+
   return (
     <>
       <section className="relative min-h-[500px] w-full bg-[#ffd7ce] overflow-hidden">
         {/* Background Image with Overlay */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${process.env.NEXT_PUBLIC_IMAGE_URL || "/luxury.jpg"})`,
-          }}
-        >
-          <div className="absolute inset-0 bg-gray-400 bg-opacity-80" />
-        </div>
+        {data.backgroundImage?.asset?.url && (
+          <Image
+            src={data.backgroundImage.asset.url}
+            alt="Honeymoon Background"
+            fill
+            className="object-cover absolute inset-0"
+          />
+        )}
+        <div className="absolute inset-0 bg-gray-400 bg-opacity-80" />
 
         {/* Content Container */}
         <div className="relative z-10 container mx-auto px-4 py-12 flex flex-col items-center justify-between h-full min-h-[500px]">
           {/* Text Content */}
           <div className="text-center space-y-4 mt-12">
-            <h1 className="text-4xl md:text-5xl font-light">HONEYMOON</h1>
-            <p className="text-xl md:text-2xl text-gray-900">Our Boutique</p>
+            <h1 className="text-4xl md:text-5xl font-light">{data.title}</h1>
+            <p className="text-xl md:text-2xl text-gray-900">{data.subtitle}</p>
           </div>
 
           {/* Buttons */}
           <div className="flex gap-4 w-full max-w-md mb-12">
-            <button className="flex-1 px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
-              <FaEye />
-              <span>view</span>
-            </button>
-            <button className="flex-1 px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2">
-              <FaUsers />
-              <span>family</span>
-            </button>
+            {data.buttons?.map((button, index) => {
+              const Icon = button.icon === "FaEye" ? FaEye : FaUsers
+              return (
+                <button
+                  key={index}
+                  className="flex-1 px-6 py-3 bg-gray-200 rounded-lg hover:bg-gray-700 hover:text-white transition-colors flex items-center justify-center gap-2"
+                >
+                  <Icon />
+                  <span>{button.label}</span>
+                </button>
+              )
+            })}
           </div>
 
           {/* Scroll Down Icon */}
@@ -61,4 +81,3 @@ export default function HoneymoonSection() {
     </>
   )
 }
-

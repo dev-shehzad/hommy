@@ -1,33 +1,51 @@
+"use client"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import { FaBed, FaWifi, FaParking, FaCoffee, FaSwimmingPool, FaUtensils } from "react-icons/fa"
+import { client } from "@/sanity/lib/client"
+import imageUrlBuilder from "@sanity/image-url"
 
-const features = [
-  {
-    title: "LUNA Suite Deluxe",
-    description:
-      "Experience luxury living with our spacious suite featuring panoramic mountain views and premium amenities.",
-    amenities: [
-      { icon: FaBed, label: "King Size Bed" },
-      { icon: FaWifi, label: "Free Wi-Fi" },
-      { icon: FaParking, label: "Free Parking" },
-    ],
-    image: "/luna.jpg",
-    imagePosition: "left",
-  },
-  {
-    title: "LUNA Premium Suite",
-    description: "Indulge in our premium suite with exclusive access to spa facilities and gourmet dining options.",
-    amenities: [
-      { icon: FaSwimmingPool, label: "Pool Access" },
-      { icon: FaCoffee, label: "Breakfast" },
-      { icon: FaUtensils, label: "Room Service" },
-    ],
-    image: "/lunamia.jpg",
-    imagePosition: "right",
-  },
-]
+// Image URL generator
+const builder = imageUrlBuilder(client)
+function urlFor(source: any) {
+  return builder.image(source).url()
+}
+
+// Icon mapping
+const iconMap: { [key: string]: JSX.Element } = {
+  FaBed: <FaBed className="text-gray-600 w-4 h-4" />,
+  FaWifi: <FaWifi className="text-gray-600 w-4 h-4" />,
+  FaParking: <FaParking className="text-gray-600 w-4 h-4" />,
+  FaCoffee: <FaCoffee className="text-gray-600 w-4 h-4" />,
+  FaSwimmingPool: <FaSwimmingPool className="text-gray-600 w-4 h-4" />,
+  FaUtensils: <FaUtensils className="text-gray-600 w-4 h-4" />,
+}
+
+interface Feature {
+  title: string
+  description: string
+  amenities: { label: string; icon: string }[]
+  image: any
+  imagePosition: "left" | "right"
+}
 
 export default function AlternatingFeatures() {
+  const [features, setFeatures] = useState<Feature[]>([])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await client.fetch(`*[_type == "blogmodule9"][0].features`)
+        setFeatures(result || [])
+      } catch (error) {
+        console.error("Sanity Fetch Error:", error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (!features.length) return <p>Loading...</p>
+
   return (
     <div className="max-w-7xl mx-auto px-4 my-12">
       <div className="space-y-12">
@@ -39,13 +57,15 @@ export default function AlternatingFeatures() {
               {/* Image Section */}
               <div className="w-full md:w-1/2">
                 <div className="relative aspect-[4/3] bg-[#ff9f80] rounded-lg overflow-hidden">
-                  <Image
-                    src={feature.image || "/placeholder.svg"}
-                    alt={feature.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-lg"
-                  />
+                  {feature.image && (
+                    <Image
+                      src={urlFor(feature.image)}
+                      alt={feature.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="rounded-lg"
+                    />
+                  )}
                 </div>
               </div>
 
@@ -58,7 +78,7 @@ export default function AlternatingFeatures() {
                 <div className="flex flex-wrap gap-4 pt-4">
                   {feature.amenities.map((amenity, i) => (
                     <div key={i} className="flex items-center gap-2 bg-white px-4 py-2 rounded-full shadow-sm">
-                      <amenity.icon className="text-gray-600 w-4 h-4" />
+                      {iconMap[amenity.icon] || <FaBed className="text-gray-600 w-4 h-4" />}
                       <span className="text-sm text-gray-700">{amenity.label}</span>
                     </div>
                   ))}
@@ -71,4 +91,3 @@ export default function AlternatingFeatures() {
     </div>
   )
 }
-

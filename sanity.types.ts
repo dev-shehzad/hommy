@@ -46,6 +46,214 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type Blogmodule9 = {
+  _id: string;
+  _type: "blogmodule9";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  features?: Array<{
+    title?: string;
+    description?: string;
+    amenities?: Array<{
+      label?: string;
+      icon?: string;
+      _key: string;
+    }>;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    imagePosition?: "left" | "right";
+    _key: string;
+  }>;
+};
+
+export type Blogmodule8 = {
+  _id: string;
+  _type: "blogmodule8";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  infoItems?: Array<{
+    title?: string;
+    description?: string;
+    _key: string;
+  }>;
+};
+
+export type Blogmodule7 = {
+  _id: string;
+  _type: "blogmodule7";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  points?: Array<string>;
+};
+
+export type Blogmodule6 = {
+  _id: string;
+  _type: "blogmodule6";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  description?: string;
+  size?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type Blogmodule5 = {
+  _id: string;
+  _type: "blogmodule5";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  subtitle?: string;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type Place = {
+  _id: string;
+  _type: "place";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  image?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  description?: string;
+  distance?: string;
+  duration?: string;
+  difficulty?: "Easy" | "Moderate" | "Advanced";
+};
+
+export type Honeymoonlayout = {
+  _id: string;
+  _type: "honeymoonlayout";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  subtitle?: string;
+  locations?: Array<{
+    name?: string;
+    description?: string;
+    image?: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    location?: string;
+    availability?: string;
+    _key: string;
+  }>;
+  carouselImages?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type Blogmodule2 = {
+  _id: string;
+  _type: "blogmodule2";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  subtitle?: string;
+  description?: string;
+};
+
+export type Honeymoon = {
+  _id: string;
+  _type: "honeymoon";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  subtitle?: string;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  buttons?: Array<{
+    label?: string;
+    icon?: string;
+    _key: string;
+  }>;
+};
+
 export type Propertii = {
   _id: string;
   _type: "propertii";
@@ -725,7 +933,7 @@ export type SanityAssistSchemaTypeField = {
   } & SanityAssistInstruction>;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Blogmodule9 | Blogmodule8 | Blogmodule7 | Blogmodule6 | Blogmodule5 | Place | Honeymoonlayout | Blogmodule2 | Honeymoon | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery

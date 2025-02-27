@@ -1,46 +1,48 @@
+'use client'
+import { useState, useEffect } from "react"
 import Image from "next/image"
 import { FaMapMarkerAlt, FaClock, FaMountain } from "react-icons/fa"
+import { client } from "@/sanity/lib/client" // Make sure this is correctly set up
+import imageUrlBuilder from "@sanity/image-url"
 
-const places = [
-  {
-    id: 1,
-    title: "Alpine Hiking Trail",
-    image: "/countryside.jpg",
-    description: "Experience breathtaking mountain views on our guided hiking trails",
-    distance: "2.5 km",
-    duration: "3 hours",
-    difficulty: "Moderate",
-  },
-  {
-    id: 2,
-    title: "Crystal Lake",
-    image: "/.jpg",
-    description: "Perfect spot for swimming and water activities in crystal clear waters",
-    distance: "1.8 km",
-    duration: "Full day",
-    difficulty: "Easy",
-  },
-  {
-    id: 3,
-    title: "Mountain Biking",
-    image: "/balanca.jpg",
-    description: "Exciting mountain biking trails for all skill levels",
-    distance: "5 km",
-    duration: "4 hours",
-    difficulty: "Advanced",
-  },
-  {
-    id: 4,
-    title: "Scenic Viewpoint",
-    image: "/hausluna.jpg",
-    description: "Panoramic views of the surrounding mountains and valleys",
-    distance: "3.2 km",
-    duration: "2 hours",
-    difficulty: "Easy",
-  },
-]
+const builder = imageUrlBuilder(client)
+
+// Sanity ke image URL ko generate karne ka function
+function urlFor(source) {
+  return builder.image(source).width(600).height(400).url()
+}
 
 export default function PopularPlaces() {
+  const [places, setPlaces] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchPlaces() {
+      try {
+        const result = await client.fetch(
+          `*[_type == "place"]{
+            _id,
+            title,
+            image,
+            description,
+            distance,
+            duration,
+            difficulty
+          }`
+        )
+        setPlaces(result || [])
+      } catch (error) {
+        console.error("Error fetching places:", error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchPlaces()
+  }, [])
+
+  if (loading) return <p className="text-center text-gray-500">Loading places...</p>
+  if (!places.length) return <p className="text-center text-gray-500">No places found.</p>
+
   return (
     <section className="py-12 px-4 bg-white">
       <div className="container mx-auto">
@@ -48,10 +50,15 @@ export default function PopularPlaces() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {places.map((place) => (
-            <div key={place.id} className="bg-white rounded-lg overflow-hidden shadow-md">
+            <div key={place._id} className="bg-white rounded-lg overflow-hidden shadow-md">
               {/* Image Container */}
               <div className="relative aspect-square">
-                <Image src={place.image || "/placeholder.svg"} alt={place.title} layout="fill" objectFit="cover" />
+                <Image
+                  src={place.image ? urlFor(place.image) : "/placeholder.svg"}
+                  alt={place.title}
+                  layout="fill"
+                  objectFit="cover"
+                />
               </div>
 
               {/* Content */}
@@ -82,4 +89,3 @@ export default function PopularPlaces() {
     </section>
   )
 }
-

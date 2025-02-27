@@ -1,70 +1,47 @@
+'use client'
+import { useState, useEffect } from "react"
 import Image from "next/image"
+import imageUrlBuilder from "@sanity/image-url"
+import { client } from "@/sanity/lib/client"
 
-const layoutItems = [
-  {
-    id: 1,
-    title: "Luxurious Alpine Retreat",
-    description: "Experience unparalleled comfort in our mountain-top suites",
-    size: "col-span-2",
-    imageUrl: "/luna.jpg",
-  },
-  {
-    id: 2,
-    title: "Panoramic Mountain Vistas",
-    description: "Wake up to breathtaking views of snow-capped peaks",
-    size: "col-span-1 row-span-2",
-    imageUrl: "/mia.jpg",
-  },
-  {
-    id: 3,
-    title: "Cozy Fireside Cabins",
-    description: "Intimate lodgings perfect for romantic getaways",
-    size: "col-span-1 row-span-2",
-    imageUrl: "/lunamia.jpg",
-  },
-  {
-    id: 4,
-    title: "Thrilling Mountain Adventures",
-    description: "From skiing to hiking, excitement awaits at every turn",
-    size: "col-span-2",
-    imageUrl: "/countryside.jpg",
-  },
-  {
-    id: 5,
-    title: "Gourmet Alpine Cuisine",
-    description: "Savor local delicacies and international flavors",
-    size: "col-span-1",
-    imageUrl: "/balanca.jpg",
-  },
-  {
-    id: 6,
-    title: "Rejuvenating Spa Experiences",
-    description: "Unwind with our world-class wellness treatments",
-    size: "col-span-1",
-    imageUrl: "/hausluna.jpg",
-  },
-  {
-    id: 7,
-    title: "Winter Wonderland Activities",
-    description: "Enjoy sledding, ice skating, and festive celebrations",
-    size: "col-span-1",
-    imageUrl: "/lunamia.jpg",
-  },
-]
+const builder = imageUrlBuilder(client)
+
+// Function to get the image URL
+function urlFor(source) {
+  return builder.image(source).width(800).height(600).url()
+}
 
 export default function ImageLayout() {
+  const [layoutItems, setLayoutItems] = useState([])
+
+  useEffect(() => {
+    async function fetchLayoutItems() {
+      try {
+        const result = await client.fetch(
+          `*[_type == "blogmodule6"]{title, description, size, image}`
+        )
+        setLayoutItems(result)
+      } catch (error) {
+        console.error("Error fetching layout items:", error)
+      }
+    }
+    fetchLayoutItems()
+  }, [])
+
+  if (!layoutItems.length) return <p className="text-center text-gray-500">Loading images...</p>
+
   return (
     <div className="max-w-7xl mx-auto px-4 my-8">
       <div className="bg-gray-300 p-4 rounded-lg">
         <div className="grid grid-cols-3 gap-4">
-          {layoutItems.map((item) => (
-            <div key={item.id} className={`${item.size} bg-gray-400 p-2 rounded overflow-hidden flex flex-col`}>
+          {layoutItems.map((item, index) => (
+            <div key={index} className={`${item.size || "col-span-1"} bg-gray-400 p-2 rounded overflow-hidden flex flex-col`}>
               <div
                 className="relative w-full flex-grow"
-                style={{ minHeight: item.size.includes("row-span-2") ? "250px" : "150px" }}
+                style={{ minHeight: item.size?.includes("row-span-2") ? "250px" : "150px" }}
               >
                 <Image
-                  src={item.imageUrl || "/placeholder.svg"}
+                  src={item.image ? urlFor(item.image) : "/placeholder.svg"}
                   alt={item.title}
                   layout="fill"
                   objectFit="cover"
@@ -82,4 +59,3 @@ export default function ImageLayout() {
     </div>
   )
 }
-

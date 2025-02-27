@@ -1,24 +1,30 @@
+'use client'
+import { useEffect, useState } from "react"
 import { FaCircle } from "react-icons/fa"
+import { client } from "@/sanity/lib/client"
 
-const infoItems = [
-  {
-    title: "Luxury Accommodations",
-    description:
-      "Experience unparalleled comfort in our premium suites with stunning mountain views and modern amenities.",
-  },
-  {
-    title: "Adventure Activities",
-    description:
-      "Discover exciting outdoor activities including hiking, skiing, and mountain biking for all skill levels.",
-  },
-  {
-    title: "Wellness Center",
-    description:
-      "Rejuvenate your body and mind in our state-of-the-art spa and wellness facilities with expert therapists.",
-  },
-]
+interface InfoItem {
+  title: string
+  description: string
+}
 
 export default function ThreeColumnInfo() {
+  const [infoItems, setInfoItems] = useState<InfoItem[]>([])
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await client.fetch(`*[_type == "blogmodule8"][0].infoItems`)
+        setInfoItems(result || [])
+      } catch (error) {
+        console.error("Sanity Fetch Error:", error)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (!infoItems.length) return <p>Loading...</p>
+
   return (
     <div className="max-w-7xl mx-auto px-4 my-12">
       <div className="bg-gray-300 p-6 md:p-8 rounded-lg">
@@ -37,4 +43,3 @@ export default function ThreeColumnInfo() {
     </div>
   )
 }
-

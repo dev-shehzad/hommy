@@ -34,6 +34,15 @@ import housepics from "./sanity/schemas/documents/housepics";
 import similarappart from "./sanity/schemas/documents/similarappart";
 import propert from "./sanity/schemas/documents/propert";
 import propertii from "./sanity/schemas/documents/tabschema";
+import honeymoon from "./sanity/schemas/documents/honeymoon";
+import blogmodule2 from "./sanity/schemas/documents/blogmodule2";
+import honemoonlayout from "./sanity/schemas/documents/honemoonlayout";
+import places from "./sanity/schemas/documents/places";
+import blogmodule5 from "./sanity/schemas/documents/blogmodule5";
+import blogmodule6 from "./sanity/schemas/documents/blogmodule6";
+import blogmodule7 from "./sanity/schemas/documents/blogmodule7";
+import blogmodule8 from "./sanity/schemas/documents/blogmodule8";
+import blogmodule9 from "./sanity/schemas/documents/blogmodule9";
 
 const homeLocation = {
   title: "Home",
@@ -230,7 +239,15 @@ export default defineConfig({
       similarappart,
     propert,
     propertii,
-    
+    honeymoon,
+    blogmodule2,
+    honemoonlayout,
+    places,
+    blogmodule5,
+    blogmodule6,
+    blogmodule7,
+    blogmodule8,
+    blogmodule9,
     ],
   },
 
