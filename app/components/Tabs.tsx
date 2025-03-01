@@ -1,65 +1,79 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Image from "next/image"
-import { HomeIcon } from "lucide-react"
-import { client } from "@/sanity/lib/client"
+import { useState, useEffect } from "react";
+import Image from "next/image";
+import { HomeIcon } from "lucide-react";
+import { client } from "@/sanity/lib/client";
 
 export default function PropertyTabs() {
-  const [tabs, setTabs] = useState([])
-  const [properties, setProperties] = useState([])
-  const [activeTab, setActiveTab] = useState("all")
+  const [tabs, setTabs] = useState([]);
+  const [properties, setProperties] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
 
   useEffect(() => {
     async function fetchData() {
-      const tabsData = await client.fetch(`*[_type == "propertii"]`)
+      const tabsData = await client.fetch(`*[_type == "propertii"]`);
       const propertiesData = await client.fetch(
         `*[_type == "properti"]{..., tabs[]->, image{asset->{url}}}`
-      )
+      );
 
       // "All" tab ko sirf tab add karo jab wo pehle se exist na kare
-      const allTabExists = tabsData.some((tab) => tab._id === "all")
-      const updatedTabs = allTabExists ? tabsData : [{ _id: "all", title: "All" }, ...tabsData]
+      const allTabExists = tabsData.some((tab) => tab._id === "all");
+      const updatedTabs = allTabExists
+        ? tabsData
+        : [{ _id: "all", title: "All" }, ...tabsData];
 
-      setTabs(updatedTabs)
-      setProperties(propertiesData)
+      setTabs(updatedTabs);
+      setProperties(propertiesData);
     }
 
-    fetchData()
-  }, [])
+    fetchData();
+  }, []);
 
   const filteredProperties =
     activeTab === "all"
       ? properties
       : properties.filter((property) =>
           property.tabs?.some((tab) => tab._id === activeTab)
-        )
+        );
 
   return (
-    <div className=" container mx-auto min-h-[500px] p-4">
+    <div className=" container mt-11 mx-auto min-h-[500px] p-4">
       {/* Tabs Section */}
-      <div className="flex mb-4 mx-auto w-fit">
+      <div className="flex gap-4 mx-auto w-fit mb-7">
         {tabs
-          .filter((tab, index, self) => self.findIndex(t => t._id === tab._id) === index) // Duplicate remove karne ke liye
-          .map((tab) => (
-          <button
-            key={tab._id}
-            onClick={() => setActiveTab(tab._id)}
-            className={`px-6 py-2 text-sm font-medium transition-colors ${
-              activeTab === tab._id
-                ? "bg-gray-900 text-white"
-                : "bg-white text-gray-900 hover:bg-gray-50"
-            }`}
-          >
-            {tab.title}
-          </button>
-        ))}
+          .filter(
+            (tab, index, self) =>
+              self.findIndex((t) => t._id === tab._id) === index
+          ) // Duplicate remove karne ke liye
+          .map((tab, index) => {
+            // Har tab ka alag color assign karne ke liye
+            const tabColors = ["bg-[#936648]", "bg-[#939695]", "bg-[#A89B77]"]; // Customize colors
+            const tabColor = tabColors[index % tabColors.length]; // Cycle through colors
+
+            return (
+              <button
+                key={tab._id}
+                onClick={() => setActiveTab(tab._id)}
+                className={`px-6 py-2 text-sm font-semibold text-white rounded-md transition-colors min-w-[180px] text-center ${tabColor} ${
+                  activeTab === tab._id
+                    ? "brightness-110 shadow-md"
+                    : "opacity-90 hover:opacity-100"
+                }`}
+              >
+                {tab.title}
+              </button>
+            );
+          })}
       </div>
 
       {/* Properties Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {filteredProperties.map((property) => (
-          <div key={property._id} className="bg-white rounded shadow overflow-hidden">
+          <div
+            key={property._id}
+            className="bg-white rounded shadow overflow-hidden"
+          >
             <div className="relative h-[200px] w-full">
               {property.image?.asset?.url ? (
                 <Image
@@ -95,5 +109,5 @@ export default function PropertyTabs() {
         ))}
       </div>
     </div>
-  )
+  );
 }

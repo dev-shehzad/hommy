@@ -8,15 +8,15 @@ import { urlForImage } from "@/sanity/lib/utils";
 interface HeroProps {
   title: string;
   description: string;
-  backgroundVideo: {
+  backgroundVideo?: {
     asset: {
       url: string;
     };
   };
-  backgroundImage: any; // Sanity image type
+  backgroundImage?: any; // Sanity image type
 }
 
-const Hero: React.FC <HeroProps> = ({
+const Hero: React.FC<HeroProps> = ({
   title,
   description,
   backgroundVideo,
@@ -39,7 +39,8 @@ const Hero: React.FC <HeroProps> = ({
 
   return (
     <>
-      <section className="relative h-screen w-full overflow-hidden">
+      <section className="relative h-[90vh] w-full overflow-hidden flex flex-col justify-center">
+        {/* Background Video or Image */}
         {backgroundVideo ? (
           <video
             ref={videoRef}
@@ -60,22 +61,31 @@ const Hero: React.FC <HeroProps> = ({
             objectFit="cover"
           />
         ) : null}
+
+        {/* Dark Overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-50" />
-        <div className="relative z-10 flex flex-col items-center justify-center h-full text-white">
-          <h1 className="text-4xl md:text-6xl font-bold mb-4 text-center">
-            {title}
-          </h1>
-          <p className="text-xl md:text-2xl mb-8 text-center max-w-2xl mx-auto opacity-80">
+
+        {/* Content Section (Left-Aligned) */}
+        <div className="relative  z-10 text-white px-8 md:px-16 w-full container mx-auto  ">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">{title}</h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-2xl opacity-80">
             {description}
           </p>
-          <button
-            onClick={handleScroll}
-            className="absolute bottom-8 animate-bounce"
-            aria-label="Scroll to content"
-          >
-            <BsChevronDown size={32} />
-          </button>
         </div>
+
+        {/* Scroll Down Button (Centered Bottom) */}
+        <button
+          onClick={handleScroll}
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white"
+          aria-label="Scroll to content"
+        >
+          <BsChevronDown size={32} />
+        </button>
+      </section>
+
+      {/* House Listing Section (Scroll Target) */}
+      <section ref={houseListingRef} id="house-listing" className="">
+        {/* Your content here */}
       </section>
     </>
   );

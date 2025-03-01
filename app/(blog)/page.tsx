@@ -4,7 +4,6 @@ import TabSystemWrapper from "../components/TabSystemWrapper";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery } from "@/sanity/lib/queries";
 import HeroWrapper from "../components/HeroWrapper";
-import HouseListingWrapper from "../components/HouseListingWrapper";
 import HousePageWrapper from "../components/HousePageWrapper";
 import ExperiencePageWrapper from "../components/ExperiencePageWrapper";
 import Tabs from "../components/Tabs";

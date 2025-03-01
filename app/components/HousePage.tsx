@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FaEye, FaBookmark } from "react-icons/fa";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 interface Property {
   _id: string;
@@ -17,6 +17,7 @@ interface Property {
   detailImageUrl?: string;
   style?: string;
   isMainProperty: boolean;
+  country?: string;
 }
 
 interface HousePageProps {
@@ -24,143 +25,105 @@ interface HousePageProps {
 }
 
 export default function HousePage({ properties = [] }: HousePageProps) {
-  // Add default empty array and null checks
   const mainProperty =
-  properties.find((prop) => prop.isMainProperty) || properties[0] || null;
+    properties.find((prop) => prop.isMainProperty) || properties[0] || null;
+  const [activeTab, setActiveTab] = useState(mainProperty?._id || "");
 
-// Initialize state outside conditionals
-const [activeTab, setActiveTab] = useState(mainProperty?._id || "");
-
-const activeProperty = properties.find(
-  (property) => property._id === activeTab
-);
-
-if (!properties || properties.length === 0) {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <p>No properties found.</p>
-    </div>
+  const activeProperty = properties.find(
+    (property) => property._id === activeTab
   );
-}
 
-if (!mainProperty || !activeProperty) {
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <p>Loading properties...</p>
-    </div>
-  );
-}
+  if (!properties.length) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>No properties found.</p>
+      </div>
+    );
+  }
+
+  if (!mainProperty || !activeProperty) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <p>Loading properties...</p>
+      </div>
+    );
+  }
 
   return (
     <main className="container mx-auto px-4 py-8">
-      <div className="grid md:grid-cols-2 gap-8">
-        {/* Left Section */}
-        <div className="bg-white rounded-lg p-6 flex flex-col min-h-[600px]">
-          <div className="space-y-6">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">
-                {mainProperty.mainTitle}
-              </h1>
-              <h2 className="text-2xl text-gray-700 mt-2">
-                {mainProperty.mainSubtitle}
-              </h2>
-            </div>
+      <div className="grid md:grid-cols-2 ">
+        {/* Left Section with Background Image & Fade Transition */}
+        <motion.div
+          key={activeTab}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          className="relative w-full h-[400px] md:h-[70vh] flex  p-4 pt-11 text-white"
+        >
+          <Image
+            src={activeProperty.mainImageUrl || "/placeholder.svg"}
+            alt={activeProperty.mainTitle || ""}
+            fill
+            className="object-cover"
+          />
 
-            <div className="aspect-video w-full relative rounded-lg overflow-hidden">
-              {mainProperty.mainImageUrl ? (
-                <Image
-                  src={mainProperty.mainImageUrl}
-                  alt={mainProperty.mainTitle || ""}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <Image
-                  src="/countryside.jpg"
-                  alt={mainProperty.mainTitle || ""}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
+          <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
-            <p className="text-gray-600 leading-relaxed">
-              {mainProperty.mainDescription}
-            </p>
-
-            <button className="inline-flex items-center px-6 py-3 w-32 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors">
-              <FaEye className="mr-2" />
-              View
-            </button>
+          <div className=" z-10 px-6 text-left md:text-left">
+            <p className="text-sm font-medium">New Member Hotels</p>
+            <h1 className="text-4xl font-bold">{activeProperty.mainTitle}</h1>
+            <p className="text-sm">{activeProperty.mainSubtitle}</p>
           </div>
-        </div>
+        </motion.div>
 
         {/* Right Section */}
-        <div className="flex flex-col min-h-[600px]">
+        <div className="flex flex-col bg-[#f7f7f4] pl-9 py-8">
           {/* Tabs */}
           <div className="grid grid-cols-3 gap-2 mb-6">
             {properties.map((property) => (
               <button
                 key={property._id}
                 onClick={() => setActiveTab(property._id)}
-                className={`flex flex-col items-center justify-center p-4 rounded-lg transition-colors ${
+                className={`flex flex-col items-start justify-start p-3 text-left  ${
                   activeTab === property._id
-                    ? "bg-white"
-                    : "bg-white hover:bg-gray-50"
+                    ? "border-black border"
+                    : "border-gray-200 hover:border-gray-400"
                 }`}
               >
-                <span className="font-medium">{property.name}</span>
-                <span className="text-sm text-gray-600">
-                  {property.style ?? "N/A"}
+                <span className="text-xs text-gray-600">
+                  {property.style || "N/A"}
                 </span>
+                <span className="font-medium">{property.name}</span>
               </button>
             ))}
           </div>
 
-          {/* Active Tab Content */}
-          <div className="bg-white rounded-lg shadow-lg p-6 flex-1 flex flex-col">
-            <div className="w-full bg-white mb-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">
-                {activeProperty.detailTitle}
-              </h3>
-              <h4 className="text-xl text-gray-700">
-                {activeProperty.detailSubtitle}
-              </h4>
+          {/* Active Tab Content with Fade Transition */}
+          <motion.div
+            key={activeTab}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            className="flex-1 flex flex-col"
+          >
+            <div className="aspect-[16/9] w-full relative overflow-hidden mb-6">
+              <Image
+                src={activeProperty.detailImageUrl || "/placeholder.svg"}
+                alt={activeProperty.detailTitle || ""}
+                fill
+                className="object-cover"
+              />
             </div>
 
-            <div className="aspect-video w-full relative rounded-lg overflow-hidden mb-6">
-              {activeProperty.detailImageUrl ? (
-                <Image
-                  src={activeProperty.detailImageUrl}
-                  alt={activeProperty.detailTitle || ""}
-                  fill
-                  className="object-cover"
-                />
-              ) : (
-                <Image
-                  src="/luna.jpg"
-                  alt={activeProperty.detailTitle || ""}
-                  fill
-                  className="object-cover"
-                />
-              )}
-            </div>
-
-            <p className="text-gray-600 leading-relaxed mb-6">
-              {activeProperty.detailDescription}
-            </p>
-
-            <div className="flex gap-4 mt-auto">
-              <button className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors">
-                <FaEye className="mr-2" />
-                View
-              </button>
-              <button className="flex-1 inline-flex items-center justify-center px-6 py-3 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition-colors">
-                <FaBookmark className="mr-2" />
-                Book
+            <div className="mt-auto flex justify-between">
+              <p className="text-gray-800 leading-relaxed mb-6">
+                {activeProperty.detailDescription}
+              </p>
+              <button className="inline-flex items-center justify-center px-6 py-3 border border-black text-black rounded-full hover:bg-gray-100 transition-colors">
+                View & book
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </main>
