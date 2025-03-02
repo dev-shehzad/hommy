@@ -1,7 +1,7 @@
 import { client } from "./client";
 
 export async function getHouseData() {
-    const query = `*[_type == "houseGrid"]{
+    const query = `*[_type == "housepics"]{
       title,
       description,
       "images": images[].asset->url

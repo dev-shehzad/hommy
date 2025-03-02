@@ -1,8 +1,10 @@
+"use client"; // ✅ Client component banaya
+
+import { useEffect, useState } from "react";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import { heroQuery } from "@/sanity/lib/queries";
 import Hero from "./Hero";
 
-// Define types for the Hero data from Sanity
 interface HeroData {
   title: string;
   description: string;
@@ -11,11 +13,26 @@ interface HeroData {
       url: string;
     };
   };
-  backgroundImage?: any; // Adjust based on your Sanity image type
+  backgroundImage?: any;
 }
 
-export default async function HeroWrapper() {
-  const heroData: HeroData = await sanityFetch({ query: heroQuery, tags: ["hero"] });
+export default function HeroWrapper() {
+  const [heroData, setHeroData] = useState<HeroData | null>(null);
+
+  useEffect(() => {
+    const fetchHero = async () => {
+      try {
+        const data: HeroData = await sanityFetch({ query: heroQuery, tags: ["hero"] });
+        setHeroData(data);
+      } catch (error) {
+        console.error("Error fetching hero data:", error);
+      }
+    };
+
+    fetchHero();
+  }, []);
+
+  if (!heroData) return <p>Loading...</p>; // ✅ Until data loads
 
   return (
     <Hero

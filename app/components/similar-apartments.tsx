@@ -1,4 +1,6 @@
-import { urlFor } from "../../sanity/lib/sanity" // Ensure you have a utility function for Sanity images
+"use client"; // 👈 Add this line at the top
+
+import { urlFor } from "../../sanity/lib/sanity";
 import Link from "next/link";
 
 type Apartment = {
@@ -29,7 +31,7 @@ type SimilarApartmentsProps = {
 };
 
 export default function SimilarApartments({ data }: SimilarApartmentsProps) {
-  console.log("SimilarApartments Data:", data); // Debugging
+  console.log("SimilarApartments Data:", data);
 
   if (!data) return <p className="text-center">No data found</p>;
 
@@ -61,7 +63,7 @@ export default function SimilarApartments({ data }: SimilarApartmentsProps) {
         {/* Overview Buttons */}
         <div className="space-y-4">
           {data.buttons?.map((button, index) => {
-            const buttonLink = button.link || "#"; // Default fallback
+            const buttonLink = button.link || "#";
             return (
               <Link key={button.label || index} href={buttonLink} passHref>
                 <button className="w-full p-4 text-left bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">

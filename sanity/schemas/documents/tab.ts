@@ -2,6 +2,7 @@ export default {
   name: 'tab',
   title: 'Tab',
   type: 'document',
+
   fields: [
     {
       name: 'title',
@@ -35,4 +36,5 @@ export default {
       validation: (Rule: any) => Rule.required(),
     }
   ]
+  
 } 

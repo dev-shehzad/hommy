@@ -88,7 +88,7 @@ export default function HouseDetails() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 mt-[60px]">
       {/* House Selection Navigation */}
       <div className="flex flex-wrap justify-center gap-4 mb-12">
         {houses.map((house) => (

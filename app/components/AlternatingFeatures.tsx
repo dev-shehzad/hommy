@@ -47,7 +47,7 @@ export default function AlternatingFeatures() {
   if (!features.length) return <p>Loading...</p>
 
   return (
-    <div className="max-w-7xl mx-auto px-4 my-12">
+    <div className="max-w-7xl mx-auto px-4 my-12 mb-11">
       <div className="space-y-12">
         {features.map((feature, index) => (
           <div key={index} className="bg-gray-300 p-6 rounded-lg">

@@ -46,6 +46,215 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type AvailabilityBanner = {
+  _id: string;
+  _type: "availabilityBanner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  backgroundImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  buttonText?: string;
+};
+
+export type Property = {
+  _id: string;
+  _type: "property";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name?: string;
+  mainTitle?: string;
+  mainSubtitle?: string;
+  mainDescription?: string;
+  mainImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  detailTitle?: string;
+  detailSubtitle?: string;
+  detailDescription?: string;
+  detailImage?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  style?: string;
+  isMainProperty?: boolean;
+};
+
+export type Dynamic = {
+  _id: string;
+  _type: "dynamic";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  componentType?: "hero" | "feature" | "properti";
+  content?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    listItem?: "bullet" | "number";
+    markDefs?: Array<{
+      href?: string;
+      _type: "link";
+      _key: string;
+    }>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+    _key: string;
+  }>;
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  components?: Array<{
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "properti";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "property";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "tab";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "experience";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "hero";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "housefeatures";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "heroHeader";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "housepics";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "availabilityBanner";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "similarapart";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "houses";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "honeymoon";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule2";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "honeymoonlayout";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "place";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule5";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule6";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule7";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule8";
+  } | {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "blogmodule9";
+  }>;
+};
+
 export type Blogmodule9 = {
   _id: string;
   _type: "blogmodule9";
@@ -933,7 +1142,7 @@ export type SanityAssistSchemaTypeField = {
   } & SanityAssistInstruction>;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | Blogmodule9 | Blogmodule8 | Blogmodule7 | Blogmodule6 | Blogmodule5 | Place | Honeymoonlayout | Blogmodule2 | Honeymoon | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | AvailabilityBanner | Property | Dynamic | Page | Blogmodule9 | Blogmodule8 | Blogmodule7 | Blogmodule6 | Blogmodule5 | Place | Honeymoonlayout | Blogmodule2 | Honeymoon | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -1124,7 +1333,20 @@ export type HouseListingQueryResult = Array<{
 }>;
 // Variable: propertiesQuery
 // Query: *[_type == "property"] {    _id,    name,    mainTitle,    mainSubtitle,    mainDescription,    "mainImageUrl": mainImage.asset->url,    detailTitle,    detailSubtitle,    detailDescription,    "detailImageUrl": detailImage.asset->url,    style,    isMainProperty  }
-export type PropertiesQueryResult = Array<never>;
+export type PropertiesQueryResult = Array<{
+  _id: string;
+  name: string | null;
+  mainTitle: string | null;
+  mainSubtitle: string | null;
+  mainDescription: string | null;
+  mainImageUrl: string | null;
+  detailTitle: string | null;
+  detailSubtitle: string | null;
+  detailDescription: string | null;
+  detailImageUrl: string | null;
+  style: string | null;
+  isMainProperty: boolean | null;
+}>;
 // Variable: tabSystemQuery
 // Query: *[_type == "tab"] | order(order asc) {    _id,    title,    heading,    description,    "imageUrl": image.asset->url,    order  }
 export type TabSystemQueryResult = Array<{

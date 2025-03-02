@@ -146,15 +146,15 @@ export default function Header() {
             <div
               className={`flex items-center gap-6 ${isWhiteBg ? "text-black" : "text-white"}`}
             >
-              <a href="/apartment" className="hidden lg:block text-sm font-light">
+              <Link href="/apartment" className="hidden lg:block text-sm font-light">
                 Apartment
-              </a>
-              <a href="/houses" className="hidden lg:block text-sm font-light">
+              </Link>
+              <Link href="/houses" className="hidden lg:block text-sm font-light">
                 Houses
-              </a>
-              <a href="/blogs" className="hidden lg:block text-sm font-light">
+              </Link>
+              <Link href="/blogs" className="hidden lg:block text-sm font-light">
                 Blogs
-              </a>
+              </Link>
               <button className="hidden lg:flex items-center justify-center w-8 h-8">
                 <FaUser
                   className={`${isWhiteBg ? "text-black" : "text-white"}`}
@@ -205,34 +205,34 @@ export default function Header() {
 
             <nav className="md:hidden mt-8 mb-8">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.id}
                   href={item.link}
                   className="flex items-center gap-2 px-4 py-3 text-lg border-b border-gray-200 hover:bg-gray-50"
                 >
                   <FaCalendar className="text-gray-400 text-xl" />
                   {item.label}
-                </a>
+                </Link>
               ))}
             </nav>
 
             <div className="grid sm:grid-cols-3 gap-8 mt-12 sm:mt-16">
               <div className="space-y-4 sm:space-y-6">
                 {houses.map((house) => (
-                  <a
+                  <Link
                     key={house.id}
                     href={house.link}
                     className="block text-xl sm:text-2xl hover:text-gray-600"
                   >
                     {house.name}
-                  </a>
+                  </Link>
                 ))}
-                <a
+                <Link
                   href="/about"
                   className="block text-xl sm:text-2xl hover:text-gray-600"
                 >
                   About Us
-                </a>
+                </Link>
               </div>
 
               <div className="space-y-4 sm:space-y-6">
@@ -258,13 +258,13 @@ export default function Header() {
 
               <div className="space-y-4 sm:space-y-6">
                 {menuLinks.map((link) => (
-                  <a
+                  <Link
                     key={link.id}
                     href={link.link}
                     className="block text-lg sm:text-xl hover:text-gray-600"
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>

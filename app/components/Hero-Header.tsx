@@ -33,7 +33,7 @@ export default function HeroHeader({ data }: HeroHeaderProps) {
     : "/lunamia.jpg";
 
   return (
-    <div className="relative h-screen">
+    <div className="relative h-[90vh]">
       <div className="absolute inset-0">
         <Image
           src={backgroundImageUrl}

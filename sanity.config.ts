@@ -1,7 +1,7 @@
 /**
  * This config is used to set up Sanity Studio that's mounted on the `app/(sanity)/studio/[[...tool]]/page.tsx` route
  */
-'use client';
+"use client";
 
 import { visionTool } from "@sanity/vision";
 import { PluginOptions, defineConfig } from "sanity";
@@ -43,13 +43,17 @@ import blogmodule6 from "./sanity/schemas/documents/blogmodule6";
 import blogmodule7 from "./sanity/schemas/documents/blogmodule7";
 import blogmodule8 from "./sanity/schemas/documents/blogmodule8";
 import blogmodule9 from "./sanity/schemas/documents/blogmodule9";
+import page from "./sanity/schemas/documents/page";
+import dynamic from "./sanity/schemas/documents/dynamic";
+import property from "./sanity/schemas/documents/property";
+import availabilityBanner from "./sanity/schemas/documents/availabilityBanner";
 
 const homeLocation = {
   title: "Home",
   href: "/",
 } satisfies DocumentLocation;
 
-const apartmentSchema = {
+export const apartmentSchema = {
   name: "apartment",
   title: "Apartment",
   type: "document",
@@ -97,7 +101,7 @@ const apartmentSchema = {
   ],
 };
 
-const experienceSchema = {
+export const experienceSchema = {
   name: "experience",
   title: "Experience",
   type: "document",
@@ -132,7 +136,7 @@ const experienceSchema = {
   ],
 };
 
-const homeContentSchema = {
+export const homeContentSchema = {
   name: "homeContent",
   title: "Home Content",
   type: "document",
@@ -209,9 +213,8 @@ export default defineConfig({
       },
     }),
     structureTool({
-      structure: pageStructure([settings]) as unknown as StructureResolver
-    })
-,    
+      structure: pageStructure([settings]) as unknown as StructureResolver,
+    }),
     singletonPlugin([settings.name]),
     unsplashImageAsset(),
     assistWithPresets(),
@@ -237,19 +240,23 @@ export default defineConfig({
       housefeatures,
       housepics,
       similarappart,
-    propert,
-    propertii,
-    honeymoon,
-    blogmodule2,
-    honemoonlayout,
-    places,
-    blogmodule5,
-    blogmodule6,
-    blogmodule7,
-    blogmodule8,
-    blogmodule9,
+      propert,
+      propertii,
+      honeymoon,
+      blogmodule2,
+      honemoonlayout,
+      places,
+      blogmodule5,
+      blogmodule6,
+      blogmodule7,
+      blogmodule8,
+      blogmodule9,
+      page,
+      dynamic,
+      property,
+      availabilityBanner,
     ],
   },
-
+  // structure: deskStructure,
   basePath: studioUrl,
 });

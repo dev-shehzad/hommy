@@ -1,6 +1,9 @@
-import { experiencesQuery } from "@/sanity/lib/queries";
-import { client } from "@/sanity/lib/client";
+"use client"; // ✅ Client component banane ke liye
+
+import { useEffect, useState } from "react";
+import { sanityFetch } from "@/sanity/lib/fetch";
 import ExperiencePage from "./ExperiencePage";
+import { experiencesQuery } from "@/sanity/lib/queries";
 
 interface Experience {
   _id: string;
@@ -12,16 +15,30 @@ interface Experience {
   category?: string;
 }
 
-const ExperiencePageWrapper = async () => {
-  try {
-    const experiences = await client.fetch<Experience[]>(experiencesQuery);
-    console.log("Fetched experiences:", experiences); // For debugging
+const ExperiencePageWrapper = () => {
+  const [experiences, setExperiences] = useState<Experience[]>([]);
+  const [loading, setLoading] = useState(true);
 
-    return <ExperiencePage experiences={experiences} />;
-  } catch (error) {
-    console.error("Error fetching experiences:", error);
-    return <div>Error loading experiences</div>;
-  }
+  useEffect(() => {
+    const fetchExperiences = async () => {
+      try {
+        const fetchedExperiences = await sanityFetch<Experience[]>({ query: experiencesQuery });
+        console.log("Fetched experiences:", fetchedExperiences); // Debugging ke liye
+        setExperiences(fetchedExperiences);
+      } catch (error) {
+        console.error("Error fetching experiences:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExperiences();
+  }, []);
+
+  if (loading) return <p>Loading experiences...</p>;
+  if (!experiences.length) return <p>No experiences available</p>;
+
+  return <ExperiencePage experiences={experiences} />;
 };
 
 export default ExperiencePageWrapper;

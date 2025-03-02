@@ -1,37 +1,48 @@
-import { tabSystemQuery } from "@/sanity/lib/queries";
+"use client";
+import { useEffect, useState } from "react";
 import { sanityFetch } from "@/sanity/lib/fetch";
 import TabSystem from "./tab-system";
+import { tabSystemQuery } from "@/sanity/lib/queries";
 
-const TabSystemWrapper = async () => {
-  try {
-    const tabs = await sanityFetch({
-      query: tabSystemQuery,
-    });
+// Define the type for tabs
+interface Tab {
+  _id: string;
+  title: string;
+  heading: string;
+  description: string;
+  imageUrl?: string;
+}
 
-    console.log("Fetched tabs:", tabs); // Debug log
+const TabSystemWrapper = () => {
+  const [tabs, setTabs] = useState<Tab[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // ✅ Loading state added
 
-    // Add a check to ensure tabs is an array and has items
-    if (!Array.isArray(tabs) || tabs.length === 0) {
-      return (
-        <div className="container mx-auto px-4 py-8">
-          <p className="text-lg text-gray-600">
-            Please add some tabs in Sanity Studio to get started.
-          </p>
-        </div>
-      );
-    }
+  useEffect(() => {
+    const fetchTabs = async () => {
+      try {
+        setIsLoading(true); // ✅ Start loading
+        const fetchedTabs = await sanityFetch<Tab[]>({ query: tabSystemQuery });
+        console.log("Fetched tabs:", fetchedTabs);
+        setTabs(fetchedTabs);
+      } catch (error) {
+        console.error("Error fetching tabs:", error);
+      } finally {
+        setIsLoading(false); // ✅ Stop loading
+      }
+    };
 
-    return <TabSystem tabs={tabs} />;
-  } catch (error) {
-    console.error("Error fetching tabs:", error);
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <p className="text-lg text-red-600">
-          Error loading tabs. Please try again later.
-        </p>
-      </div>
-    );
+    fetchTabs();
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading tabs...</p>; // ✅ Show loader instead of "No tabs available"
   }
+
+  if (!tabs || tabs.length === 0) {
+    return <p>No tabs available</p>;
+  }
+
+  return <TabSystem tabs={tabs} />;
 };
 
 export default TabSystemWrapper;

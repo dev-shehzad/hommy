@@ -1,7 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { getHouseFeatures } from "@/sanity/lib/getHouseFeatures";
 import {
   FaBed,
   FaBath,
@@ -10,21 +8,17 @@ import {
   FaPalette,
 } from "react-icons/fa";
 
-export default function FeaturesSection() {
-  const [featureData, setFeatureData] = useState(null);
+interface FeatureProps {
+  featureData: {
+    rooms: { count: number; view: string };
+    themes: string[];
+    bed: { kingSize: number; couch: number };
+    nature: string[];
+    bathroom: { count: number; amenities: string[] };
+  };
+}
 
-  useEffect(() => {
-    async function fetchData() {
-      const data = await getHouseFeatures();
-      setFeatureData(data);
-    }
-    fetchData();
-  }, []);
-
-  if (!featureData) {
-    return <p className="text-center text-gray-600">Loading...</p>;
-  }
-
+export default function FeaturesSection({ featureData }: FeatureProps) {
   return (
     <section className="bg-gradient-to-b from-white to-gray-50 py-16">
       <div className="container mx-auto px-4">

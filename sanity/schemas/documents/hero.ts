@@ -4,6 +4,7 @@ export default defineType({
   name: 'hero',
   title: 'Hero',
   type: 'document',
+  
   fields: [
     defineField({
       name: 'title',
@@ -32,4 +33,5 @@ export default defineType({
       },
     }),
   ],
+
 });

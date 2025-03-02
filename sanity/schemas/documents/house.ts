@@ -12,4 +12,5 @@ export default defineType({
       validation: (Rule: any) => Rule.required(),
     }),
   ],
+
 });
