@@ -1,23 +1,32 @@
 import { client } from "./client";
 
+
 export async function getSimilarApartments() {
-    return await client.fetch(
-      `*[_type == "similarapart"][0]{
-        sectionTitle,
-        apartments[] {
-          _id,
-          title,
-          houseName,
-          description,
-          imageUrl
-        },
-        buttons[] {
-          label,
-          subtext,
-          link
-        }
-      }`
-    );
+  const query = `
+  *[_type == "similarapart"][0] {
+    sectionTitle,
+    buttons[]{
+      label,
+      subtext,
+      link,
+      linkedApartments[]->{
+        _id,
+        slug,
+        title,
+        houseName,
+        description,
+        imageUrl
+      }
+    }
   }
-  
-  
+  `;
+
+  try {
+    const data = await client.fetch(query);
+    console.log("✅ Fetched Similar Apartments:", data);
+    return data;
+  } catch (error) {
+    console.error("❌ Error fetching similar apartments:", error);
+    return null;
+  }
+}

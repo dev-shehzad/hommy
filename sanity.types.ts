@@ -46,6 +46,29 @@ export type Geopoint = {
   alt?: number;
 };
 
+export type SimilarApartment = {
+  _id: string;
+  _type: "similarApartment";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  houseName?: string;
+  description?: string;
+  imageUrl?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
 export type AvailabilityBanner = {
   _id: string;
   _type: "availabilityBanner";
@@ -508,27 +531,17 @@ export type Similarapart = {
   _updatedAt: string;
   _rev: string;
   sectionTitle?: string;
-  apartments?: Array<{
-    title?: string;
-    houseName?: string;
-    description?: string;
-    imageUrl?: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    };
-    _key: string;
-  }>;
   buttons?: Array<{
     label?: string;
     subtext?: string;
     link?: string;
+    linkedApartments?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "similarApartment";
+    }>;
     _key: string;
   }>;
 };
@@ -1142,7 +1155,7 @@ export type SanityAssistSchemaTypeField = {
   } & SanityAssistInstruction>;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | AvailabilityBanner | Property | Dynamic | Page | Blogmodule9 | Blogmodule8 | Blogmodule7 | Blogmodule6 | Blogmodule5 | Place | Honeymoonlayout | Blogmodule2 | Honeymoon | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | Geopoint | SimilarApartment | AvailabilityBanner | Property | Dynamic | Page | Blogmodule9 | Blogmodule8 | Blogmodule7 | Blogmodule6 | Blogmodule5 | Place | Honeymoonlayout | Blogmodule2 | Honeymoon | Propertii | Properti | Similarapart | Housepics | Housefeatures | Houses | Footer | Features | HeroHeader | HomeContent | Experience | Tab | Apartment | House | Hero | SanityFileAsset | Post | Author | Slug | Settings | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery

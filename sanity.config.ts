@@ -47,6 +47,7 @@ import page from "./sanity/schemas/documents/page";
 import dynamic from "./sanity/schemas/documents/dynamic";
 import property from "./sanity/schemas/documents/property";
 import availabilityBanner from "./sanity/schemas/documents/availabilityBanner";
+import similarApartment from "./sanity/schemas/documents/similarApartment";
 
 const homeLocation = {
   title: "Home",
@@ -255,6 +256,7 @@ export default defineConfig({
       dynamic,
       property,
       availabilityBanner,
+      similarApartment,
     ],
   },
   // structure: deskStructure,
